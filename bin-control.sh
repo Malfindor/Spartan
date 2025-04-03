@@ -30,6 +30,18 @@ while true; do
 		"exit")
 			exit
 			;;
+		"start")
+			loop=$true
+			while $loop; do
+				read -p "Enter difficulty(1:easy, 2:medium, 3:hard): " difficulty
+				if [[ "$difficulty" != "easy" ]] && [[ "$difficulty" != "1" ]] && [[ "$difficulty" != "medium" ]] && [[ "$difficulty" != "2" ]] && [[ "$difficulty" != "hard" ]] && [[ "$difficulty" != "3" ]]; then
+					echo "Invalid difficulty selection."
+				else
+					loop=$false
+				fi
+				bash /etc/SPARTAN/initilizer "$difficulty"
+			done
+			;;
 		*)
 			printHelp
 			;;
