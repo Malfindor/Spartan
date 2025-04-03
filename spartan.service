@@ -1,0 +1,13 @@
+[Unit]
+Description=Spartan OffSec Practice Bot
+
+[Service]
+Type=simple
+Restart=always
+Environment="PATH=/sbin:/bin:/usr/sbin:/usr/bin"
+ExecStart=/bin/bash -c '/etc/SPARTAN/core'
+StartLimitInterval=1s
+StartLimitBurst=999
+
+[Install]
+WantedBy=multi-user.target
