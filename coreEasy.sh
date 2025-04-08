@@ -105,10 +105,13 @@ checkForUnknownUsers()
 		declare -i gid=${userInfo[3]}
 		userInWhitelist $username isInWhitelist
 		if [[ $isInWhitelist == "3" ]]; then
-			userdel -f $username
-			current_time=$(date +"%H:%M:%S")
-			log="[ $current_time ] - An unknown user with UID/GID $uid : $gid was found and removed: $username"
-			echo $log >> /etc/SPARTAN/spartan.log
+			genRandPercent
+			if [[ $PERCENT_CHANCE -lt 51 ]]; then
+				userdel -f $username
+				current_time=$(date +"%H:%M:%S")
+				log="[ $current_time ] - An unknown user with UID/GID $uid : $gid was found and removed: $username"
+				echo $log >> /etc/SPARTAN/spartan.log
+			fi
 		fi
 	isInWhitelist=""
 done
@@ -148,10 +151,19 @@ fi
 while true; do
 	genRandPercent
 	if [[ $PERCENT_CHANCE -lt 21 ]]; then
+		current_time=$(date +"%H:%M:%S")
+		log="[ $current_time ] - Checking for unknown users..."
+		echo $log >> /etc/SPARTAN/spartan.log
 		checkForUnknownUsers
 	elif [[ $PERCENT_CHANCE -lt 61 ]]; then
+		current_time=$(date +"%H:%M:%S")
+		log="[ $current_time ] - Checking the crontab..."
+		echo $log >> /etc/SPARTAN/spartan.log
 		checkCrontab
 	else
+		current_time=$(date +"%H:%M:%S")
+		log="[ $current_time ] - Checking for remote logins..."
+		echo $log >> /etc/SPARTAN/spartan.log
 		checkForRemoteLogins
 	fi
 	
