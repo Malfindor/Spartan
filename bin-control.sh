@@ -40,6 +40,7 @@ while true; do
 					loop=$false
 				fi
 				bash /etc/SPARTAN/initilizer "$difficulty"
+				echo "Remember the rules: /etc/SPARTAN/ must remain intact and untouched, /bin/spartan must remain intact/untouched, and the 'spartan' service must remain intact and running."
 			done
 			;;
 		*)
